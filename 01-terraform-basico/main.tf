@@ -1,3 +1,18 @@
+//Fixar a versão do provider e do terraform
+terraform {
+  required_version = "0.15.5"
+
+
+  required_providers {
+    aws = {
+//      indica que é um provider oficial
+      source = "hashicorp/aws"
+      version = "3.44.0"
+    }
+  }
+}
+
+
 provider "aws" {
   region = "us-east-1"
 //  OBS: se eu não tivesse feito a configuração: aws configure via cli, onde eu preenchi o meu
