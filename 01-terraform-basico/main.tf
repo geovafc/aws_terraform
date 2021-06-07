@@ -14,7 +14,7 @@ terraform {
 
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
   //  OBS: se eu não tivesse feito a configuração: aws configure via cli, onde eu preenchi o meu
   //  Access Key ID e Secret Access Key  via linha de comando, eu teria que colocar esses valores aqui
   //  o que seria altamente inseguro ou então utilizando variáveis de ambiente
@@ -22,26 +22,25 @@ provider "aws" {
 
 // criação de recurso: recurso do tipo aws_s3_bucket com o nome my-test-bucket pra identificar ele
 
-resource "aws_s3_bucket" "my-test-bucket" {
-  //
-  bucket = "my-tf-test-bucket-8398392883232323"
-  acl    = "private"
+//resource "aws_s3_bucket" "my-test-bucket" {
+//  //
+//  bucket = "my-tf-test-bucket-8398392883232323"
+//  acl    = "private"
+//
+//  tags = {
+//    Name        = "My bucket"
+//    Environment = "Dev"
+//    ManagedBy   = "Terraform"
+//    Owner       = "Geovane Freitas Camara"
+//    UpdatedAt   = "2021-06-08"
+//  }
+//
+//}
 
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-    ManagedBy   = "Terraform"
-    Owner       = "Geovane Freitas Camara"
-    UpdatedAt   = "2021-06-08"
-  }
-
-}
-
+// Permite criar, atualizar e excluir instâncias no EC2
 resource "aws_instance" "web" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  ami           = var.instance_ami
+  instance_type = var.instance_type
 
-  tags = {
-    Name = "HelloWorld"
-  }
+  tags = var.instance_tags
 }
